@@ -2,23 +2,24 @@ const express = require("express");
 const router = express.Router();
 
 const Checklist = require("../models/checklist");
-const checklist = require("../models/checklist");
+
 
 router.get("/", async (req, res) => {
   try {
-    let checklist = await Checklist.find({});
-    res.status(200).json(checklist);
-    res.status(200).render("checklists/index", { checklists: checklists });
-  } catch (error) {
-    res
-      .status(200).render("pages/error", { error: "erro ao exibir as listas" });
+    let checklists = await Checklist.find({});
+    console.log(checklists)
+   res.status(200).render("checklists/index", { title:'teste', checklists: checklists } );
+  }catch (error) {console.log(error)
+    res.status(200).render("error", { error: "erro ao exibir as listas" });
   }
 });
+
 router.post("/", async (req, res) => {
   let { name } = req.body;
-
+  console.log(name)
   try {
     let checklist = await Checklist.create({ name });
+  
 
     res.status(200).json(checklist);
   } catch (error) {
